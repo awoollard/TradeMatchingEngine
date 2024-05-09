@@ -14,8 +14,8 @@ public class SideTests
         side.Orders.Add(order);
 
         // Assert
-        Assert.AreEqual(1, side.Orders.Count);
-        Assert.AreSame(order, side.Orders[0]);
+        Assert.That(side.Orders.Count, Is.EqualTo(1));
+        Assert.That(order, Is.SameAs(side.Orders[0]));
     }
 
     [Test]
@@ -30,6 +30,6 @@ public class SideTests
         side.Orders.Remove(order);
 
         // Assert
-        Assert.AreEqual(0, side.Orders.Count);
+        Assert.That(side.Orders.Count, Is.EqualTo(0));
     }
 }

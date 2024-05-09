@@ -1,0 +1,8 @@
+.config/
+.vs/
+MatchingEngine.Tests/TestResults/
+MatchingEngine.Tests/bin/
+MatchingEngine.Tests/obj/
+MatchingEngine/bin/
+MatchingEngine/obj/
+TestResult.xml

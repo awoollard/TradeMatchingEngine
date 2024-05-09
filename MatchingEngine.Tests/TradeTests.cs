@@ -13,6 +13,6 @@ public class TradeTests
         var result = trade.ToString();
 
         // Assert
-        Assert.AreEqual("A:B:EURUSD:100:1.2", result);
+        Assert.That(result, Is.EqualTo("A:B:EURUSD:100:1.2"));
     }
 }

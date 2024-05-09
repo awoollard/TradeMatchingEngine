@@ -1,21 +1,21 @@
 
 
 public class Trade {
-    public string buyerId { get; set; }
-    public string sellerId { get; set; }
-    public string symbol { get; set;}
-    public int quantity { get; set;}
-    public float price { get; set; }
+    public string BuyerId { get; set; }
+    public string SellerId { get; set; }
+    public string Symbol { get; set;}
+    public int Quantity { get; set;}
+    public float Price { get; set; }
     
     public Trade(string buyerId, string sellerId, string symbol, int quantity, float price) {
-        this.buyerId = buyerId;
-        this.sellerId = sellerId;
-        this.symbol = symbol;
-        this.quantity = quantity;
-        this.price = price;
+        BuyerId = buyerId;
+        SellerId = sellerId;
+        Symbol = symbol;
+        Quantity = quantity;
+        Price = price;
     }
 
     public override string ToString() {
-        return $"{buyerId}:{sellerId}:{symbol}:{quantity}:{price}";
+        return $"{BuyerId}:{SellerId}:{Symbol}:{Quantity}:{Price}";
     }
 }

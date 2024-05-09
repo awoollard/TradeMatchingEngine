@@ -1,10 +1,15 @@
 public static class MatchingService
 {
+    /// <summary>
+    /// Takes a diction
+    /// </summary>
+    /// <param name="instruments">The dictionary of instruments containing both buy and sell sides of the orders</param>
+    /// <returns>The aggregated list of executed trades for each instrument</returns>
     public static List<Trade> Process(Dictionary<string, Tuple<Side, Side>> instruments)
     {
         List<Trade> trades = [];
         
-        // Sort orders by price and sequence
+        // Sort orders by Price and sequence
         SortSides(instruments);
 
         foreach (var instrument in instruments)
@@ -14,6 +19,13 @@ public static class MatchingService
         return trades;
     }
 
+    /// <summary>
+    /// Sorts both sides of a given instrument.
+    /// The buy side is sorted by prices in descending order, then ascending sequence ID.
+    /// The sell side is sorted by prices in ascending order, then descending sequence ID.
+    /// 
+    /// </summary>
+    /// <param name="instruments">The dictionary of instruments containing both buy and sell sides of the orders</param>
     public static void SortSides(Dictionary<string, Tuple<Side, Side>> instruments)
     {
         foreach (var instrument in instruments)
@@ -22,45 +34,50 @@ public static class MatchingService
             var sellSide = instrument.Value.Item2;
 
             instrument.Value.Item1.Orders = instrument.Value.Item1.Orders
-                .OrderByDescending(x => x.price)
-                .ThenBy(x => x.sequenceId).ToList();
+                .OrderByDescending(x => x.Price)
+                .ThenBy(x => x.SequenceId).ToList();
             
             instrument.Value.Item2.Orders = instrument.Value.Item2.Orders
-                .OrderBy(x => x.price)
-                .ThenBy(x => x.sequenceId).ToList();
+                .OrderBy(x => x.Price)
+                .ThenBy(x => x.SequenceId).ToList();
         }
     }
 
+    /// <summary>
+    /// Processes both sides containing orders for a given instrument.
+    /// </summary>
+    /// <param name="buySide">Buy side</param>
+    /// <param name="sellSide">Sell side</param>
+    /// <returns>List of executed trades</returns>
     public static List<Trade> ProcessInstrument(Side buySide, Side sellSide)
     {
         List<Trade> trades = new List<Trade>();
         foreach (var buy in buySide.Orders.ToList())
         {
             var eligibleSells = sellSide.Orders
-                .Where(x => x.price <= buy.price)
+                .Where(x => x.Price <= buy.Price)
                 .ToList();
             
             foreach(var sell in eligibleSells)
             {
-                // Sanity check sell object
                 // Buy quantity could be zero if order is fully filled
-                if (buy.quantity == 0)
+                if (buy.Quantity == 0)
                     break;
 
-                // Trade size is the minimum of buy order quantity and lowest price sell quantity
-                var tradeSize = Math.Min(Math.Abs(buy.quantity), Math.Abs(sell.quantity));
+                // Trade size is the minimum of buy order quantity and lowest Price sell quantity
+                var tradeSize = Math.Min(Math.Abs(buy.Quantity), Math.Abs(sell.Quantity));
 
                 float tradePrice;
-                if(buy.sequenceId < sell.sequenceId) {
+                if(buy.SequenceId < sell.SequenceId) {
                     // Buy order was first
-                    tradePrice = buy.price;
+                    tradePrice = buy.Price;
                 } else {
                     // Sell order was first
-                    tradePrice = sell.price;
+                    tradePrice = sell.Price;
                 }
 
                 // Match! Record the trade and update both sides of the instrument.
-                trades.Add(new Trade(buy.participantId, sell.participantId, sell.symbol, tradeSize, tradePrice));
+                trades.Add(new Trade(buy.ParticipantId, sell.ParticipantId, sell.Symbol, tradeSize, tradePrice));
                 UpdateSides(buySide, sellSide, buy, sell, tradeSize);
             }
         }
@@ -79,26 +96,26 @@ public static class MatchingService
     private static void UpdateSides(Side buySide, Side sellSide, Order buy, Order sell, int tradeSize)
     {
         // Sell side quantity is already negative so needs to be flipped to positive, then we subtract trade size.
-        var sellQuantity = Math.Abs(sell.quantity) - tradeSize;
+        var sellQuantity = Math.Abs(sell.Quantity) - tradeSize;
         if (sellQuantity == 0)
         {
             // Sell side fully filled, remove it from sell side orders.
             sellSide.Orders.Remove(sell);
         } else {
             // Update sell side quantity, flipping quantity back to negative
-            sell.quantity = -sellQuantity;
+            sell.Quantity = -sellQuantity;
         }
 
 
         // Update buy side quantity
-        var buyQuantity = buy.quantity - tradeSize;
+        var buyQuantity = buy.Quantity - tradeSize;
         if (buyQuantity == 0)
         {
             // Buy side fully filled, remove it from buy side orders.
             buySide.Orders.Remove(buy);
         } else {
             // Update buy side quantity
-            buy.quantity = buyQuantity;
+            buy.Quantity = buyQuantity;
         }
     }
 }

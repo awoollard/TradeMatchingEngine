@@ -16,13 +16,13 @@ public class MatchingEngineTests
         var trades = MatchingService.Process(orders);
 
         // Assert
-        Assert.IsNotNull(trades);
-        Assert.AreEqual(1, trades.Count);
-        Assert.AreEqual("A", trades[0].buyerId);
-        Assert.AreEqual("B", trades[0].sellerId);
-        Assert.AreEqual("AUDUSD", trades[0].symbol);
-        Assert.AreEqual(50, trades[0].quantity);
-        Assert.AreEqual(1.47f, trades[0].price);
+        Assert.That(trades, Is.Not.Null);
+        Assert.That(trades.Count, Is.EqualTo(1));
+        Assert.That(trades[0].BuyerId, Is.EqualTo("A"));
+        Assert.That(trades[0].SellerId, Is.EqualTo("B"));
+        Assert.That(trades[0].Symbol, Is.EqualTo("AUDUSD"));
+        Assert.That(trades[0].Quantity, Is.EqualTo(50));
+        Assert.That(trades[0].Price, Is.EqualTo(1.47f));
     }
 
     [Test]
@@ -44,15 +44,15 @@ public class MatchingEngineTests
         // Act
         var trades = MatchingService.Process(orders);
 
-        // Assert // Assert
-        Assert.IsNotNull(trades);
-        Assert.AreEqual(4, trades.Count);
+        // Assert
+        Assert.That(trades, Is.Not.Null);
+        Assert.That(trades.Count, Is.EqualTo(4));
 
         // Assert trade details
-        Assert.AreEqual("A:C:GBPUSD:10:1.66", trades[0].ToString());
-        Assert.AreEqual("A:C:GBPUSD:20:1.66", trades[1].ToString());
-        Assert.AreEqual("D:F:EURUSD:50:1.1", trades[2].ToString());
-        Assert.AreEqual("D:B:EURUSD:50:1.11", trades[3].ToString());
+        Assert.That(trades[0].ToString(), Is.EqualTo("A:C:GBPUSD:10:1.66"));
+        Assert.That(trades[1].ToString(), Is.EqualTo("A:C:GBPUSD:20:1.66"));
+        Assert.That(trades[2].ToString(), Is.EqualTo("D:F:EURUSD:50:1.1"));
+        Assert.That(trades[3].ToString(), Is.EqualTo("D:B:EURUSD:50:1.11"));
     }
 
     [Test]
@@ -65,8 +65,8 @@ public class MatchingEngineTests
         var trades = MatchingService.Process(orders);
 
         // Assert
-        Assert.IsNotNull(trades);
-        Assert.IsEmpty(trades);
+        Assert.That(trades, Is.Not.Null);
+        Assert.That(trades, Is.Empty);
     }
 
     [Test]
@@ -81,8 +81,8 @@ public class MatchingEngineTests
         var trades = MatchingService.Process(orders);
 
         // Assert
-        Assert.IsNotNull(trades);
-        Assert.IsEmpty(trades);
+        Assert.That(trades, Is.Not.Null);
+        Assert.That(trades, Is.Empty);
     }
 
     [Test]
@@ -98,13 +98,13 @@ public class MatchingEngineTests
         var trades = MatchingService.Process(orders);
 
         // Assert
-        Assert.IsNotNull(trades);
-        Assert.AreEqual(1, trades.Count);
-        Assert.AreEqual("A", trades[0].buyerId);
-        Assert.AreEqual("B", trades[0].sellerId);
-        Assert.AreEqual("AUDUSD", trades[0].symbol);
-        Assert.AreEqual(50, trades[0].quantity);
-        Assert.AreEqual(1.47f, trades[0].price);
+        Assert.That(trades, Is.Not.Null);
+        Assert.That(trades.Count, Is.EqualTo(1));
+        Assert.That(trades[0].BuyerId, Is.EqualTo("A"));
+        Assert.That(trades[0].SellerId, Is.EqualTo("B"));
+        Assert.That(trades[0].Symbol, Is.EqualTo("AUDUSD"));
+        Assert.That(trades[0].Quantity, Is.EqualTo(50));
+        Assert.That(trades[0].Price, Is.EqualTo(1.47f));
     }
 
     [Test]
@@ -123,8 +123,8 @@ public class MatchingEngineTests
         var trades = MatchingService.Process(orders);
 
         // Assert
-        Assert.IsNotNull(trades);
-        Assert.AreEqual(2, trades.Count);
+        Assert.That(trades, Is.Not.Null);
+        Assert.That(trades.Count, Is.EqualTo(2));
         // Assert trade details...
     }
 
@@ -141,8 +141,8 @@ public class MatchingEngineTests
         var trades = MatchingService.Process(orders);
 
         // Assert
-        Assert.IsNotNull(trades);
-        Assert.IsEmpty(trades);
+        Assert.That(trades, Is.Not.Null);
+        Assert.That(trades, Is.Empty);
     }
 
     [Test]
@@ -158,8 +158,8 @@ public class MatchingEngineTests
         var trades = MatchingService.Process(orders);
 
         // Assert
-        Assert.IsNotNull(trades);
-        Assert.IsEmpty(trades);
+        Assert.That(trades, Is.Not.Null);
+        Assert.That(trades, Is.Empty);
     }
 
     [Test]
@@ -176,8 +176,8 @@ public class MatchingEngineTests
         var trades = MatchingService.Process(orders);
 
         // Assert
-        Assert.IsNotNull(trades);
-        Assert.IsEmpty(trades);
+        Assert.That(trades, Is.Not.Null);
+        Assert.That(trades, Is.Empty);
     }
 
     [Test]
@@ -194,10 +194,10 @@ public class MatchingEngineTests
         var trades = MatchingService.Process(orders);
 
         // Assert
-        Assert.IsNotNull(trades);
-        Assert.AreEqual(2, trades.Count);
-        Assert.AreEqual(50, trades[0].quantity);
-        Assert.AreEqual(25, trades[1].quantity);
+        Assert.That(trades, Is.Not.Null);
+        Assert.That(trades.Count, Is.EqualTo(2));
+        Assert.That(trades[0].Quantity, Is.EqualTo(50));
+        Assert.That(trades[1].Quantity, Is.EqualTo(25));
     }
     
     [Test]
@@ -214,8 +214,8 @@ public class MatchingEngineTests
         var trades = MatchingService.Process(orders);
 
         // Assert
-        Assert.IsNotNull(trades);
-        Assert.AreEqual(1, trades.Count);
-        Assert.AreEqual("C:A:AUDUSD:50:1.47", trades[0].ToString());
+        Assert.That(trades, Is.Not.Null);
+        Assert.That(trades.Count, Is.EqualTo(1));
+        Assert.That(trades[0].ToString(), Is.EqualTo("C:A:AUDUSD:50:1.47"));
     }
 }

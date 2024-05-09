@@ -3,51 +3,56 @@ using NUnit.Framework;
 [TestFixture]
 public class InputParserTests
 {
-    // [Test]
-    // public void InputParser_ParseInput_EmptyInput_ReturnsEmptyDictionary()
-    // {
-    //     // Arrange & Act
-    //     var result = InputParser.ParseInput();
+    [Test]
+    public void InputParser_ParseInput_EmptyInput_ReturnsEmptyDictionary()
+    {
+        // Arrange
+        string input = string.Empty;
+        StringReader reader = new StringReader(input);
+        Console.SetIn(reader);
 
-    //     // Assert
-    //     Assert.IsNotNull(result);
-    //     Assert.IsEmpty(result);
-    // }
+        // Act
+        var result = InputParser.ParseInput();
 
-    // [Test]
-    // public void InputParser_ParseInput_SingleValidInput_ReturnsDictionaryWithOneItem()
-    // {
-    //     // Arrange
-    //     string input = "A:AUDUSD:100:1.47\n";
+        // Assert
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result, Is.Empty);
+    }
 
-    //     // Act
-    //     System.IO.StringReader reader = new System.IO.StringReader(input);
-    //     Console.SetIn(reader);
-    //     var result = InputParser.ParseInput();
+    [Test]
+    public void InputParser_ParseInput_SingleValidInput_ReturnsDictionaryWithOneItem()
+    {
+        // Arrange
+        string input = "A:AUDUSD:100:1.47\n";
 
-    //     // Assert
-    //     Assert.IsNotNull(result);
-    //     Assert.AreEqual(1, result.Count);
-    //     Assert.IsTrue(result.ContainsKey("AUDUSD"));
-    // }
+        // Act
+        StringReader reader = new StringReader(input);
+        Console.SetIn(reader);
+        var result = InputParser.ParseInput();
 
-    // [Test]
-    // public void InputParser_ParseInput_MultipleValidInputs_ReturnsDictionaryWithMultipleItems()
-    // {
-    //     // Arrange
-    //     string input = "A:AUDUSD:100:1.47\nB:AUDUSD:-50:1.45\nC:EURUSD:200:1.2\n";
+        // Assert
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Count, Is.EqualTo(1));
+        Assert.That(result.ContainsKey("AUDUSD"), Is.True);
+    }
 
-    //     // Act
-    //     System.IO.StringReader reader = new System.IO.StringReader(input);
-    //     Console.SetIn(reader);
-    //     var result = InputParser.ParseInput();
+    [Test]
+    public void InputParser_ParseInput_MultipleValidInputs_ReturnsDictionaryWithMultipleItems()
+    {
+        // Arrange
+        string input = "A:AUDUSD:100:1.47\nB:AUDUSD:-50:1.45\nC:EURUSD:200:1.2\n";
 
-    //     // Assert
-    //     Assert.IsNotNull(result);
-    //     Assert.AreEqual(2, result.Count);
-    //     Assert.IsTrue(result.ContainsKey("AUDUSD"));
-    //     Assert.IsTrue(result.ContainsKey("EURUSD"));
-    // }
+        // Act
+        StringReader reader = new StringReader(input);
+        Console.SetIn(reader);
+        var result = InputParser.ParseInput();
+
+        // Assert
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Count, Is.EqualTo(2));
+        Assert.That(result.ContainsKey("AUDUSD"), Is.True);
+        Assert.That(result.ContainsKey("EURUSD"), Is.True);
+    }
     
     [Test]
     public void InputParser_ParseInput_InvalidInputFormat_ReturnsEmptyDictionary()
@@ -56,13 +61,13 @@ public class InputParserTests
         string input = "InvalidInputFormat\n";
 
         // Act
-        System.IO.StringReader reader = new System.IO.StringReader(input);
+        StringReader reader = new StringReader(input);
         Console.SetIn(reader);
         var result = InputParser.ParseInput();
 
         // Assert
-        Assert.IsNotNull(result);
-        Assert.IsEmpty(result);
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result, Is.Empty);
     }
 
     [Test]
@@ -72,12 +77,12 @@ public class InputParserTests
         string input = "A:AUDUSD:invalid_quantity:1.47\n";
 
         // Act
-        System.IO.StringReader reader = new System.IO.StringReader(input);
+        StringReader reader = new StringReader(input);
         Console.SetIn(reader);
         var result = InputParser.ParseInput();
 
         // Assert
-        Assert.IsNotNull(result);
-        Assert.IsEmpty(result);
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result, Is.Empty);
     }
 }

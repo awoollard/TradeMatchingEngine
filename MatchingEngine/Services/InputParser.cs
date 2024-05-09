@@ -40,7 +40,9 @@ public static class InputParser {
 
     private static bool ReadInput(out string line, out string participantId, out string symbol, out int quantity, out float price)
     {
+        #pragma warning disable CS8601
         line = Console.ReadLine();
+        #pragma warning restore CS8601
 
         if (string.IsNullOrEmpty(line))
         {

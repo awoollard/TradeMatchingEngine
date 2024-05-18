@@ -30,9 +30,6 @@ public static class MatchingService
     {
         foreach (var instrument in instruments)
         {
-            var buySide = instrument.Value.Item1;
-            var sellSide = instrument.Value.Item2;
-
             instrument.Value.Item1.Orders = instrument.Value.Item1.Orders
                 .OrderByDescending(x => x.Price)
                 .ThenBy(x => x.SequenceId).ToList();

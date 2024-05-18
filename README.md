@@ -22,7 +22,7 @@ This command line application serves as a basic exchange or an "order matcher", 
 - **Self-Trading**: A buyer is allowed to trade with itself.
 - **Usage**:
     ```
-    ./TradeMatchingEngine < orders.txt > trades.txt
+    ./MatchingEngine < orders.txt > trades.txt
     ```
 ### Examples
 
